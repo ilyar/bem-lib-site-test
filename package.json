@@ -1,0 +1,16 @@
+{
+  "name": "bem-lib-site-test",
+  "version": "0.0.0",
+  "description": "For testing generate docs",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ilyar/bem-lib-site-test.git"
+  },
+  "scripts": {
+    "install": "scripts/install.sh",
+    "test": "rm -fr docs && bem-lib-site-data . && bem-lib-site-view docs/data"
+  },
+  "devDependencies": {
+  },
+  "dependencies": {}
+}
