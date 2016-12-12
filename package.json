@@ -8,7 +8,7 @@
   },
   "scripts": {
     "postinstall": "scripts/postinstall.sh",
-    "test": "rm -fr docs && bem-lib-site-data . && bem-lib-site-view docs/data"
+    "test": "rm -fr docs && bem-lib-site-data . && bem-lib-site-view tmp/data"
   },
   "devDependencies": {
   },

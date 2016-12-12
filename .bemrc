@@ -9,7 +9,7 @@ module.exports = {
   modules : {
     'bem-lib-site' : {
       data : {
-        outputFolder : 'docs/data',
+        outputFolder : 'tmp/data',
       },
       view : {
         outputFolder : 'docs',
