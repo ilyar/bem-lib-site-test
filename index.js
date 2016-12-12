@@ -804,18 +804,18 @@ var BEM = inherit(events.Emitter, /** @lends BEM.prototype */ {
      */
     getMods : function(elem) {
         var hasElem = elem && typeof elem !== 'string',
-            modNames = [].slice.call(arguments, hasElem? 1 : 0),
-            res = this._extractMods(modNames, hasElem? elem : undef);
+            modCache = this._modCache,
+            modNames = [].slice.call(arguments, hasElem? 1 : 0);
 
-        if(!hasElem) { // caching
-            modNames.length?
-                modNames.forEach(function(name) {
-                    this._modCache[name] = res[name];
-                }, this) :
-                this._modCache = res;
-        }
+        return !modNames.length?
+            modCache :
+            modNames.reduce(function(res, mod) {
+                if(mod in modCache) {
+                    res[mod] = modCache[mod];
+                }
 
-        return res;
+                return res;
+            }, {});
     },
 
     /**
@@ -996,17 +996,6 @@ var BEM = inherit(events.Emitter, /** @lends BEM.prototype */ {
      */
     _extractModVal : function(modName, elem) {
         return '';
-    },
-
-    /**
-     * Retrieves name/value for a list of modifiers
-     * @private
-     * @param {Array} modNames Names of modifiers
-     * @param {Object} [elem] Element
-     * @returns {Object} Hash of modifier values by name
-     */
-    _extractMods : function(modNames, elem) {
-        return {};
     },
 
     /**
@@ -1608,7 +1597,8 @@ modules.define('next-tick', function(provide) {
 var global = this.global,
     fns = [],
     enqueueFn = function(fn) {
-        return fns.push(fn) === 1;
+        fns.push(fn);
+        return fns.length === 1;
     },
     callFns = function() {
         var fnsToCall = fns, i = 0, len = fns.length;
@@ -2661,6 +2651,29 @@ DOM = BEM.decl('i-bem__dom',/** @lends BEMDOM.prototype */{
     },
 
     /**
+     * Returns values of modifiers of the block/nested element
+     * @param {Object} [elem] Nested element
+     * @param {String} [...modNames] Modifier names
+     * @returns {Object} Hash of modifier values
+     */
+    getMods : function(elem) {
+        var hasElem = elem && typeof elem !== 'string',
+            modCache = this._modCache,
+            modNames = [].slice.call(arguments, hasElem? 1 : 0),
+            res = this._extractMods(modNames, hasElem? elem : undef);
+
+        if(!hasElem) { // Caching
+            modNames.length?
+                modNames.forEach(function(name) {
+                    modCache[name] = res[name];
+                }) :
+                modCache = res;
+        }
+
+        return res;
+    },
+
+    /**
      * Sets a modifier for a block/nested element
      * @param {jQuery} [elem] Nested element
      * @param {String} modName Modifier name
@@ -3586,15 +3599,19 @@ provide(DOM);
 
 (function() {
 
-var origDefine = modules.define;
+var origDefine = modules.define,
+    storedDeps = []; // NOTE: see https://github.com/bem/bem-core/issues/1446
 
 modules.define = function(name, deps, decl) {
     origDefine.apply(modules, arguments);
 
-    name !== 'i-bem__dom_init' && arguments.length > 2 && ~deps.indexOf('i-bem__dom') &&
-        modules.define('i-bem__dom_init', [name], function(provide, _, prev) {
-            provide(prev);
+    if(name !== 'i-bem__dom_init' && arguments.length > 2 && ~deps.indexOf('i-bem__dom')) {
+        storedDeps.push(name);
+        storedDeps.length === 1 && modules.define('i-bem__dom_init', storedDeps, function(provide) {
+            provide(arguments[arguments.length - 1]);
+            storedDeps = [];
         });
+    }
 };
 
 })();
@@ -5490,14 +5507,19 @@ provide(BEMDOM.decl({ block : this.name, baseBlock : Control }, /** @lends butto
             this._focusedByPointer = true;
             this._focus();
             this._focusedByPointer = false;
-            this
-                ._updateChecked()
-                .emit('click');
+            this.bindTo('pointerclick', this._onPointerClick);
         } else {
             this._blur();
         }
 
         this.delMod('pressed');
+    },
+
+    _onPointerClick : function() {
+        this
+            .unbindFrom('pointerclick', this._onPointerClick)
+            ._updateChecked()
+            .emit('click');
     },
 
     _onKeyDown : function(e) {
