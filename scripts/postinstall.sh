@@ -3,7 +3,7 @@
 vendorPath=$(pwd)'/node_modules'
 
 viewVersion='master'
-dataVersion='master'
+dataVersion='7f13647f68a56e0b6972ce7131b7cb78eb8caa93'
 
 cd ${vendorPath}
 git clone --single-branch -b master https://github.com/bem-site/bem-lib-site-view.git
