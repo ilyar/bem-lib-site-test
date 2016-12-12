@@ -7,7 +7,7 @@
     "url": "git://github.com/ilyar/bem-lib-site-test.git"
   },
   "scripts": {
-    "install": "scripts/install.sh",
+    "postinstall": "scripts/postinstall.sh",
     "test": "rm -fr docs && bem-lib-site-data . && bem-lib-site-view docs/data"
   },
   "devDependencies": {
