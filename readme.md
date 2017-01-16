@@ -1,6 +1,13 @@
 # bem-lib-site-test
 
-[![Build Status](https://travis-ci.org/ilyar/bem-lib-site-test.svg?branch=master)](https://travis-ci.org/ilyar/bem-lib-site-test)
+[![*nix status][travis-img]][travis]
+[![windows Status][appveyor-img]][appveyor]
+
+[travis]: https://travis-ci.org/ilyar/bem-lib-site-test.svg
+[travis-img]: https://img.shields.io/travis/ilyar/bem-lib-site-test.svg?label=*nix
+
+[appveyor]: https://ci.appveyor.com/project/ilyar/bem-lib-site-test
+[appveyor-img]: https://img.shields.io/appveyor/ci/ilyar/bem-lib-site-test.svg?style=flat&label=Windows
 
 For testing generate docs.
 
