@@ -11,7 +11,7 @@
     "test": "rm -fr docs && bem-lib-site-data . && bem-lib-site-view tmp/data"
   },
   "devDependencies": {
-    "bem-lib-site-view": "github:bem-site/bem-site/bem-lib-site-view#305a86d",
+    "bem-lib-site-view": "github:bem-site/bem-lib-site-view#305a86d",
     "bem-lib-site-data": "github:bem-site/bem-lib-site-data#26f2881"
   },
   "dependencies": {}
