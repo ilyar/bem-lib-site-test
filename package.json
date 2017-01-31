@@ -7,11 +7,10 @@
     "url": "git://github.com/ilyar/bem-lib-site-test.git"
   },
   "scripts": {
-    "postinstall": "cd node_modules/bem-lib-site-view && npm i",
+    "postinstall": "cd ./node_modules && git clone --single-branch -b master https://github.com/bem-site/bem-lib-site-view.git && cd bem-lib-site-view && npm i",
     "test": "rm -fr docs && bem-lib-site-data . && bem-lib-site-view tmp/data"
   },
   "devDependencies": {
-    "bem-lib-site-view": "github:bem-site/bem-lib-site-view#305a86d",
     "bem-lib-site-data": "github:bem-site/bem-lib-site-data#26f2881"
   },
   "dependencies": {}
