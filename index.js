@@ -49,7 +49,7 @@ var BEMHTML;
 );
         global['BEMHTML'] = BEMHTML;
     }
-})(typeof window !== "undefined" ? window : global || this);
+})(typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : this);
 
 /**
  * Modules
