@@ -3,11 +3,11 @@
 [![*nix status][travis-img]][travis]
 [![windows Status][appveyor-img]][appveyor]
 
-[travis]: https://travis-ci.org/ilyar/bem-lib-site-test.svg
-[travis-img]: https://img.shields.io/travis/ilyar/bem-lib-site-test.svg?label=*nix
+[travis]: https://travis-ci.org/ilyar/bem-lib-site-test
+[travis-img]: https://travis-ci.org/ilyar/bem-lib-site-test.svg?branch=master
 
 [appveyor]: https://ci.appveyor.com/project/ilyar/bem-lib-site-test
-[appveyor-img]: https://img.shields.io/appveyor/ci/ilyar/bem-lib-site-test.svg?style=flat&label=Windows
+[appveyor-img]: https://ci.appveyor.com/api/projects/status/github/ilyar/bem-lib-site-test?branch=master&svg=true&passingText=Windows
 
 For testing generate docs.
 
